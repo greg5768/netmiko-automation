@@ -2,10 +2,10 @@ from netmiko import ConnectHandler ##Imports netmiko library and ConnectHandler 
 import paramiko ##Imports paramiko
 router10 = {
     'device_type': 'cisco_ios',
-    'host': 'Target device IP address',
-    'username': 'greg234',
-    'password' : 'your password',
-    'secret': 'your level 15 secret password',
+    'host': '192.168.1.1', ##Target device IP address for SSH session
+    'username': 'username', #Login local username on device
+    'password' : 'password', ##Replace with password
+    'secret': 'password', ##Replace with secret password
     } ##Creates dict for Router10 with associated values
 paramiko.Transport._preferred_kex = ('diffie-hellman-group14-sha1',) ##Used to authenticate SSH session using SHA-1
 paramiko.Transport._preferred_host_key_types = ('ssh-rsa',)
