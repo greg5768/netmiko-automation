@@ -20,10 +20,10 @@ import paramiko ##Imports paramiko
 
 router10 = {      ##Creates dict for Router10 with associated values
     'device_type': 'cisco_ios',
-    'host': '192.168.1.93',
+    'host': 'your device IP address',
     'username': 'greg234',
-    'password' : 'cisco',
-    'secret': 'cisco',
+    'password' : 'password',
+    'secret': 'password',
     }
     
 paramiko.Transport._preferred_kex = ('diffie-hellman-group14-sha1',) ##Used to authenticate SSH session using SHA-1
