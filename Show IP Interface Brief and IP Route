@@ -3,10 +3,10 @@ import paramiko
 import time
 router10 = {
     'device_type': 'cisco_ios',
-    'host': '192.168.1.93',
+    'host': 'Target device IP address',
     'username': 'greg234',
-    'password' : 'cisco',
-    'secret': 'cisco',
+    'password' : 'your password',
+    'secret': 'your level 15 secret password',
     }
 paramiko.Transport._preferred_kex = ('diffie-hellman-group14-sha1',)
 paramiko.Transport._preferred_host_key_types = ('ssh-rsa',)
