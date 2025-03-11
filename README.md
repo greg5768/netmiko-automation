@@ -1,7 +1,8 @@
 # netmiko-automation for SSH and basic show commands for Cisco IOS
-Establishes SSH for Router10 and provides SHA-1 RSA negotiation, gives output for show commands:
+Establishes SSH for Cisco devices, provides SHA-1 RSA negotiation and dispalys output for show commands:
 -IP interface brief 
 -IP route
+
 Clone Repository:
 
 git clone https://github.com/greg5768/netmiko-automation.git
