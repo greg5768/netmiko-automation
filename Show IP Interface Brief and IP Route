@@ -1,0 +1,22 @@
+from netmiko import ConnectHandler 
+import paramiko
+import time
+router10 = {
+    'device_type': 'cisco_ios',
+    'host': '192.168.1.93',
+    'username': 'greg234',
+    'password' : 'cisco',
+    'secret': 'cisco',
+    }
+paramiko.Transport._preferred_kex = ('diffie-hellman-group14-sha1',)
+paramiko.Transport._preferred_host_key_types = ('ssh-rsa',)
+try: 
+    print('Attempting SSH Connection')
+    connect = ConnectHandler(**router10)
+    print('Connection Established')
+    ipbri = connect.send_command('show ip int bri')
+    print(ipbri)
+    route = connect.send_command('show ip route')
+    print(route)
+except Exception as e:
+    print(f' SSH Connection failed: {e}')
