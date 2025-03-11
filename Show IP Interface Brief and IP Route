@@ -1,22 +1,21 @@
-from netmiko import ConnectHandler 
-import paramiko
-import time
+from netmiko import ConnectHandler ##Imports netmiko library and ConnectHandler function for SSH access
+import paramiko ##Imports paramiko
 router10 = {
     'device_type': 'cisco_ios',
     'host': 'Target device IP address',
     'username': 'greg234',
     'password' : 'your password',
     'secret': 'your level 15 secret password',
-    }
-paramiko.Transport._preferred_kex = ('diffie-hellman-group14-sha1',)
+    } ##Creates dict for Router10 with associated values
+paramiko.Transport._preferred_kex = ('diffie-hellman-group14-sha1',) ##Used to authenticate SSH session using SHA-1
 paramiko.Transport._preferred_host_key_types = ('ssh-rsa',)
 try: 
     print('Attempting SSH Connection')
-    connect = ConnectHandler(**router10)
+    connect = ConnectHandler(**router10) ##Passes Router10 to ConnectHandler function to initate SSH session
     print('Connection Established')
-    ipbri = connect.send_command('show ip int bri')
-    print(ipbri)
-    route = connect.send_command('show ip route')
-    print(route)
+    ipbri = connect.send_command('show ip int bri') ##Executes "show ip interface brief" command on R10
+    print(ipbri) ##Outputs show ip int bri contents
+    route = connect.send_command('show ip route') ##Executes "show ip route" on R10
+    print(route) ##Outputs show ip route contents
 except Exception as e:
-    print(f' SSH Connection failed: {e}')
+    print(f' SSH Connection failed: {e}')  ##Provides failover debug for SSH connection failure
