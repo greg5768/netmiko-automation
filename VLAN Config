@@ -1,0 +1,48 @@
+
+from netmiko import ConnectHandler 
+import paramiko
+
+switch1 = {
+    'device_type': 'cisco_ios',
+    'host': '10.0.31.2',
+    'username': 'greg234',
+    'password' : 'cisco',
+    'secret': 'cisco',
+    }
+paramiko.Transport._preferred_kex = ('diffie-hellman-group14-sha1',)
+paramiko.Transport._preferred_host_key_types = ('ssh-rsa',)
+
+def ssh_connect(device):
+    print('Attempting SSH Connection')
+    connect = ConnectHandler(**device)
+    print('Connection Established')
+    enable = connect.enable()
+
+    vlans = list(range(50, 100))
+    trunk_int = 'G0/3'
+    vlancommands = []
+
+    for vlan1 in vlans:
+        vlancommands.append(f'vlan {vlan1}')
+        vlancommands.append('exit')
+
+    vlancommands.extend([
+    f'interface {trunk_int}',
+    'sw trunk encap dot1q',
+    'sw mode trunk',
+    'sw trunk allow vlan 90-100',
+    'sw trunk prun vlan 90-100',
+    'exit'
+    ])
+    
+    connect.send_config_set(vlancommands)
+    vlanbri = connect.send_command('sh vlan bri')
+    print(vlanbri)
+    trunkints = connect.send_command('sh int trunk')
+    print(trunkints)
+    connect.disconnect()
+    print('Session Ended')
+
+
+    
+ssh_connect(switch1)
