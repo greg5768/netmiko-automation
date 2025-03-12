@@ -18,15 +18,15 @@ def ssh_connect(device):
     print('Connection Established')
     enable = connect.enable()
 
-    vlans = list(range(50, 100))
+    vlans_list = list(range(50, 100)) ##Creates a list of integers ranging from 50-100 
     trunk_int = 'G0/3'
     vlancommands = []
 
-    for vlan1 in vlans:
+    for vlan1 in vlans_list: ##For loop for assigning vlan key word to an integer (VLAN ID)
         vlancommands.append(f'vlan {vlan1}')
         vlancommands.append('exit')
 
-    vlancommands.extend([
+    vlancommands.extend([  ##Creates a list of several config commands to be passed to CLI for VLAN and Trunk interface configuration
     f'interface {trunk_int}',
     'sw trunk encap dot1q',
     'sw mode trunk',
@@ -35,7 +35,7 @@ def ssh_connect(device):
     'exit'
     ])
     
-    connect.send_config_set(vlancommands)
+    connect.send_config_set(vlancommands) ##Passes configuration commands through send_config_set function, which allows passing of commands in the CLI configure terminal 
     vlanbri = connect.send_command('sh vlan bri')
     print(vlanbri)
     trunkints = connect.send_command('sh int trunk')
@@ -45,4 +45,4 @@ def ssh_connect(device):
 
 
     
-ssh_connect(switch1)
+ssh_connect(switch1) ##Executes 
