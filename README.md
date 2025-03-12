@@ -1,4 +1,4 @@
-# netmiko-automation for SSH and basic show commands for Cisco IOS
+# netmiko-automation for SSH and commands for Cisco IOS
 Establishes SSH for Cisco devices, provides SHA-1 RSA negotiation and dispalys output for show commands:
 -IP interface brief 
 -IP route
