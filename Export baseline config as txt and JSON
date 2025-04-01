@@ -1,0 +1,42 @@
+from netmiko import ConnectHandler
+import paramiko
+import os
+import json
+router = {
+    'device_type': 'cisco_ios',
+    'host': '192.168.1.93',
+    'username': 'username',
+    'password' : 'cisco',
+    'secret': 'cisco',
+    }
+paramiko.Transport._preferred_kex = ('diffie-hellman-group14-sha1',)
+paramiko.Transport._preferred_host_key_types = ('ssh-rsa',)
+
+def save_baseline(device):
+    print('Attempting SSH Connection')
+    connect = ConnectHandler(**device)
+    print('Connection Established')
+    enable = connect.enable()
+
+    showrun = connect.send_command('Show run')
+    doc_path_txt = 'C:/Users/username/Documents/backups/R10/TXT'
+    doc_path_json = 'C:/Users/username/Documents/backups/R10/JSON'
+    filesave = os.path.join(doc_path_txt, f'{router['host']}.baseline.txt')
+    with open(filesave, 'w') as file:
+        file.write(showrun)
+    print(f' baseline cofiguration saved to folder: C:/Users/username/Documents/backups/R10/TXT')
+    
+    json_export = {
+        'host': router['host'],
+        'config': showrun
+        }
+    json_save = os.path.join(doc_path_json, f'{router['host']}.baseline.json')
+    with open(json_save, 'w') as jsonfile:
+        json.dump(json_export, jsonfile)
+    print(f' baseline cofiguration saved to folder: C:/Users/username/Documents/backups/R10/JSON')   
+    connect.disconnect()
+    
+
+    
+
+save_baseline(router)
