@@ -18,19 +18,19 @@ def save_baseline(device):
     print('Connection Established')
     enable = connect.enable()
 
-    showrun = connect.send_command('Show run')
-    doc_path_txt = 'C:/Users/username/Documents/backups/R10/TXT'
-    doc_path_json = 'C:/Users/username/Documents/backups/R10/JSON'
-    filesave = os.path.join(doc_path_txt, f'{router['host']}.baseline.txt')
-    with open(filesave, 'w') as file:
-        file.write(showrun)
+    showrun = connect.send_command('Show run') ##Sends showrun command to router
+    doc_path_txt = 'C:/Users/username/Documents/backups/R10/TXT' ##Used to access file path to save config as text file
+    doc_path_json = 'C:/Users/username/Documents/backups/R10/JSON' ##Used to access file path to save config as json file
+    filesave = os.path.join(doc_path_txt, f'{router['host']}.baseline.txt') ##Creates filesave varialbe used to host IP as filename
+    with open(filesave, 'w') as file: 
+        file.write(showrun) ##Creates txt file
     print(f' baseline cofiguration saved to folder: C:/Users/username/Documents/backups/R10/TXT')
     
-    json_export = {
+    json_export = { ##Stores R10's IP and showrun output into dictionary 
         'host': router['host'],
         'config': showrun
         }
-    json_save = os.path.join(doc_path_json, f'{router['host']}.baseline.json')
+    json_save = os.path.join(doc_path_json, f'{router['host']}.baseline.json') ##Passes host IP as file name for
     with open(json_save, 'w') as jsonfile:
         json.dump(json_export, jsonfile)
     print(f' baseline cofiguration saved to folder: C:/Users/username/Documents/backups/R10/JSON')   
